@@ -14,7 +14,7 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package at.dhx.adempiere.inventory.process;
+package at.dhx.adempiere.einventory.process;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;

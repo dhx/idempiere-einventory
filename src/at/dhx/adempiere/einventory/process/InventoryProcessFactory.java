@@ -1,4 +1,4 @@
-package at.dhx.adempiere.inventory.process;
+package at.dhx.adempiere.einventory.process;
 
 import org.adempiere.base.IProcessFactory;
 import org.compiere.process.ProcessCall;
