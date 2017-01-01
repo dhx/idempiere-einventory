@@ -1,0 +1,19 @@
+ * This program is free software; you can redistribute it and/or modify it    *
+ * under the terms version 2 of the GNU General Public License as published   *
+ * by the Free Software Foundation. This program is distributed in the hope   *
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even the implied *
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.           *
+ * See the GNU General Public License for more details.                       *
+ * You should have received a copy of the GNU General Public License along    *
+ * with this program; if not, write to the Free Software Foundation, Inc.,    *
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
+
+This extension contains currently:
+
+- an new version of the update inventory qty process that allows to keep the
+  current count qty when updating the book qty.
+
+To enable the new inventory qty update process you'll have to change the Process
+field of the UpdateQty Column of the M_Inventory Table to "M_Inventory Update
+Booking Count" after the Plugin is unpacked and the new AD Entries are
+generated.
