@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Inventory
-Bundle-SymbolicName: at.dhx.adempiere.inventory;singleton:=true
+Bundle-SymbolicName: at.dhx.adempiere.einventory;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: dhx.at
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
