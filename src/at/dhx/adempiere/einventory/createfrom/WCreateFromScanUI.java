@@ -142,7 +142,7 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 		row.appendChild(scanLabel.rightAlign());
 		row.appendChild(scanField.getComponent());
 
-		row.appendChild(new Space());
+		//row.appendChild(new Space());
 
 		row.appendChild(locatorLabel.rightAlign());
 		row.appendChild(locatorField.getComponent());

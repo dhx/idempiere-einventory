@@ -226,7 +226,7 @@ public abstract class CreateFromScan extends CreateFrom
 	}
 
 	/**
-	 *  Save - Create Invoice Lines
+	 *  Save - Create MInventoryLines
 	 *  @return true if saved
 	 */
 	public boolean save(IMiniTable miniTable, String trxName)
