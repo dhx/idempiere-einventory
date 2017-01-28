@@ -45,6 +45,7 @@ import org.compiere.util.CLogger;
 import org.compiere.util.Env;
 import org.compiere.util.KeyNamePair;
 import org.compiere.util.Msg;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -168,12 +169,18 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 			if (products.size() < 1) {
 				int M_Locator_ID = findLocatorId(scan);
 				if (M_Locator_ID > -1) {
-					String cdisplay = locatorField.getDisplay();
+					//String cdisplay = locatorField.getDisplay();
 					Object cvalue = locatorField.getValue();
 					if ( ! cvalue.equals(M_Locator_ID) ) {
 						locatorField.setValue(M_Locator_ID);						
 						loadLocator(inventoryId, locatorField.getM_Locator_ID());
 					}
+				} else {
+					// did not find a product / locator with the scanned text
+					// notify the user
+					m_actionActive = false;
+					throw new WrongValueException(scanField.getComponent(),
+							Msg.translate(Env.getCtx(), "FindZeroRecords"));
 				}
 			} else {
 				checkProductUsingUPC();				
@@ -211,6 +218,7 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 				if (iline.save()) {
 					model.setValueAt(qty, row, 1);
 					model.setValueAt(Boolean.TRUE, row, 0);
+					window.getWListbox().setSelectedIndex(row);
 					model.updateComponent(row, row);
 				}
 			} else {
@@ -232,6 +240,7 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 					pp = new KeyNamePair(nline.getM_InventoryLine_ID(), String.valueOf(nline.getLine()));
 					line.add(pp); // 4-Line
 					model.add(line);
+					window.getWListbox().setSelectedIndex(model.getNoRows()-1);
 					model.updateComponent(model.getRowCount(), model.getRowCount());
 				}
 				
@@ -293,8 +302,7 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 		ListModelTable model = new ListModelTable(data);
 		model.addTableModelListener(window);
 		window.getWListbox().setData(model, getOISColumnNames());
-		//
-		
+		//		
 		configureMiniTable(window.getWListbox());
 	}   //  loadOrder
 	
