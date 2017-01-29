@@ -180,7 +180,7 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 					// notify the user
 					m_actionActive = false;
 					throw new WrongValueException(scanField.getComponent(),
-							Msg.translate(Env.getCtx(), "FindZeroRecords"));
+								Msg.translate(Env.getCtx(), "FindZeroRecords"));
 				}
 			} else {
 				checkProductUsingUPC();				
@@ -216,10 +216,13 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 				BigDecimal qty = iline.getQtyCount().add(BigDecimal.ONE);
 				iline.setQtyCount(qty);
 				if (iline.save()) {
-					model.setValueAt(qty, row, 1);
-					model.setValueAt(Boolean.TRUE, row, 0);
-					window.getWListbox().setSelectedIndex(row);
-					model.updateComponent(row, row);
+					Object e = model.remove(row);
+					model.add(0, e);
+					model.setValueAt(qty, 0, 1);
+					model.setValueAt(Boolean.TRUE, 0, 0);
+					//window.getWListbox().setSelectedIndex(row);
+					//model.updateComponent(row, row);
+					model.updateComponent(0, 0);
 				}
 			} else {
 				// no existing inventory line for this product at this locator
@@ -239,9 +242,10 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 					line.add(pp); // 3-Product
 					pp = new KeyNamePair(nline.getM_InventoryLine_ID(), String.valueOf(nline.getLine()));
 					line.add(pp); // 4-Line
-					model.add(line);
-					window.getWListbox().setSelectedIndex(model.getNoRows()-1);
-					model.updateComponent(model.getRowCount(), model.getRowCount());
+					model.add(0,line);
+					//window.getWListbox().setSelectedIndex(model.getNoRows()-1);
+					//model.updateComponent(model.getRowCount(), model.getRowCount());
+					model.updateComponent(0, 0);
 				}
 				
 			}
