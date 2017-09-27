@@ -59,7 +59,7 @@ public abstract class CreateFromScan extends CreateFrom
 	{
 		super(mTab);
 		if (log.isLoggable(Level.INFO)) log.info(mTab.toString());
-	}   //  VCreateFromShipment
+	}
 
 	/**
 	 *  Dynamic Init
@@ -75,8 +75,9 @@ public abstract class CreateFromScan extends CreateFrom
 
 
 	/**
-	 * Load Invoice details
-	 * @param C_Invoice_ID Invoice
+	 * Load Locator Data
+	 * @param M_Locator_ID Locator
+	 * @param M_Inventory_ID Inventory
 	 */
 	protected Vector<Vector<Object>> getLocatorData(int M_Locator_ID, int M_Inventory_ID)
 	{
@@ -180,7 +181,7 @@ public abstract class CreateFromScan extends CreateFrom
 		return pp;
 	}
 	
-	protected int findLocatorId(String text)
+	protected int findLocatorId(String text, int M_Warehouse_ID)
 	{
 		if (text == null || text.length() == 0)
 		{
@@ -194,11 +195,11 @@ public abstract class CreateFromScan extends CreateFrom
 		
 		int M_Locator_ID = new Query(Env.getCtx(),
 				MLocator.Table_Name,
-				"UPPER(Value) LIKE ?",
+				"UPPER(Value) LIKE ? AND M_Warehouse_ID=?",
 				null)
 				.setClient_ID()
 				.setOnlyActiveRecords(true)
-				.setParameters(new Object[] { text })
+				.setParameters(new Object[] { text, M_Warehouse_ID })
 				.firstId();
 				
 		return M_Locator_ID;

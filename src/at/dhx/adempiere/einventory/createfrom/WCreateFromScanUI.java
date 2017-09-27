@@ -71,6 +71,7 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 			if (!dynInit())
 				return;
 			zkInit();
+			loadLocator(inventoryId, locatorField.getM_Locator_ID());
 			setInitOK(true);
 		}
 		catch(Exception e)
@@ -93,6 +94,7 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 	protected Label scanLabel = new Label();
 	protected WStringEditor scanField = new WStringEditor();
 	protected int inventoryId = 0;
+	protected int warehouseId = 0;
 	protected MInventory inventory = null;
     
 	/**
@@ -108,8 +110,12 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 		
 		window.setTitle(getTitle());
 
+		warehouseId = Env.getContextAsInt(Env.getCtx(), p_WindowNo, "M_Warehouse_ID");
+		
+		
 		//  load Locator
 		MLocatorLookup locator = new MLocatorLookup(Env.getCtx(), p_WindowNo);
+		locator.setOnly_Warehouse_ID(warehouseId);
 		locatorField = new WLocatorEditor ("M_Locator_ID", true, false, true, locator, p_WindowNo);
 		locatorField.getComponent().addEventListener(Events.ON_CHANGE, this);
 		locatorLabel.setMandatory(true);
@@ -167,11 +173,11 @@ public class WCreateFromScanUI extends CreateFromScan implements EventListener<E
 			String scan = scanField.getDisplay();
 			List<MProduct> products = MProduct.getByUPC(Env.getCtx(), scan, null);
 			if (products.size() < 1) {
-				int M_Locator_ID = findLocatorId(scan);
+				int M_Locator_ID = findLocatorId(scan, warehouseId);
 				if (M_Locator_ID > -1) {
 					//String cdisplay = locatorField.getDisplay();
 					Object cvalue = locatorField.getValue();
-					if ( ! cvalue.equals(M_Locator_ID) ) {
+					if ( cvalue == null || ! cvalue.equals(M_Locator_ID) ) {
 						locatorField.setValue(M_Locator_ID);						
 						loadLocator(inventoryId, locatorField.getM_Locator_ID());
 					}
